@@ -90,10 +90,12 @@ model Folder {
 }
 
 model Config {
-    id         String @id @unique
+    id          String  @id @unique
     // 页面端口
-    webPort    Int
+    webPort     Int
     // 资源端口
-    assetsPort Int
-    ip         String
+    assetsPort  Int
+    ip          String
+    // 代理 eg: rao.pics
+    assetsProxy String?
 }
