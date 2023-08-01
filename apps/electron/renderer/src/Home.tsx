@@ -153,7 +153,7 @@ function Home() {
   };
 
   return (
-    <div className="flex h-screen w-full text-sm">
+    <div className="flex h-[450px] w-full text-sm">
       <div className="scrollbar bg-base-200/70 w-1/4 overflow-y-auto">
         <div className="sticky top-0 z-10 flex justify-center  p-2">
           <button className="btn btn-outline flex w-full items-center" disabled={disabled} onClick={showOpenDialog}>

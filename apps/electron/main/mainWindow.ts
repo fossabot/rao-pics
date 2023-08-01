@@ -1,6 +1,6 @@
 import { join } from "path";
 import { URL } from "url";
-import { BrowserWindow, app } from "electron";
+import { app, BrowserWindow } from "electron";
 
 /**
  * URL for main window.
@@ -16,9 +16,10 @@ async function createWindow() {
   const browserWindow = new BrowserWindow({
     show: false, // Use the 'ready-to-show' event to show the instantiated BrowserWindow.
     width: 768,
-    height: 450,
+    height: 486,
     resizable: false,
     autoHideMenuBar: true,
+    titleBarStyle: "hidden",
     webPreferences: {
       allowRunningInsecureContent: false, // https://www.electronjs.org/docs/latest/tutorial/security#8-do-not-enable-allowrunninginsecurecontent
       enableBlinkFeatures: "", // https://www.electronjs.org/docs/latest/tutorial/security#10-do-not-use-enableblinkfeatures
