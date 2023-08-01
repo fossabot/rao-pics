@@ -96,6 +96,6 @@ model Config {
     // 资源端口
     assetsPort  Int
     ip          String
-    // 代理 eg: rao.pics
-    assetsProxy String?
+    // eg: https://rao.pics
+    site String?
 }

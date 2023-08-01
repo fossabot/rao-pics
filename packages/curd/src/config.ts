@@ -7,6 +7,7 @@ export const ConfigInput = {
     assetsPort: z.number(),
     ip: z.string(),
     webPort: z.number(),
+    site: z.string(),
   }),
 };
 

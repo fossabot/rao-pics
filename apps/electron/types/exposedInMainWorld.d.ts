@@ -7,6 +7,7 @@ interface Window {
   readonly app: {
     getVersion: () => Promise<string>;
     getName: () => Promise<string>;
+    relaunch: () => Promise<void>;
   };
 
   /** Same as Main.dialog */

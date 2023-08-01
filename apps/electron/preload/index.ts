@@ -23,6 +23,7 @@ process.once("loaded", () => {
   contextBridge.exposeInMainWorld("app", {
     getVersion: () => ipcRenderer.invoke("app.getVersion"),
     getName: () => ipcRenderer.invoke("app.getName"),
+    relaunch: () => ipcRenderer.invoke("app.relaunch"),
   });
 
   /**

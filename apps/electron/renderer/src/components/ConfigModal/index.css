@@ -1,0 +1,17 @@
+.config-modal {
+  .row {
+    @apply flex justify-between p-2;
+
+    &:nth-child(2n-1) {
+      @apply bg-base-200/50;
+    }
+
+    .left {
+      @apply text-base-content/70 flex;
+
+      > span {
+        @apply ml-2;
+      }
+    }
+  }
+}
