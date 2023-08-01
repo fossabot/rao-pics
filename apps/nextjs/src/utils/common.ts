@@ -1,4 +1,20 @@
-import { type Image } from "@acme/db";
+import { type Config, type Image } from "@acme/db";
+
+/**
+ * 获取图片的 url，如果访问页面使用的ip，就使用ip，否则使用site
+ * @param config
+ * @returns
+ */
+export const getAssetUrl = (config: Config | null | undefined) => {
+  if (!config) return null;
+
+  const { ip, site, assetsPort } = config;
+
+  // 本地访问直接使用ip
+  if (window.location.hostname === ip) return `http://${ip}:${assetsPort}`;
+
+  return site || `http://${ip}:${assetsPort}`;
+};
 
 export const getImgUrl = (prefix: string, img: Image, original = false) => {
   let p = img.thumbnailPath || img.path;

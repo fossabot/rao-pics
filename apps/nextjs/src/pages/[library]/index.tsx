@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import { useEffect, useMemo, useState } from "react";
 
-import { getImgUrl, GridScreensConfig, transformByteToUnit } from "~/utils/common";
+import { getAssetUrl, getImgUrl, GridScreensConfig, transformByteToUnit } from "~/utils/common";
 import { trpc } from "~/utils/trpc";
 import Layout from "~/components/Layout";
 
@@ -63,7 +63,7 @@ const IndexPage: NextPage = () => {
 
   const { data: config } = trpc.config.get.useQuery();
 
-  const assetsUrl = useMemo(() => (config ? `http://${config?.ip}:${config?.assetsPort}` : null), [config]);
+  const assetsUrl = useMemo(() => getAssetUrl(config), [config]);
 
   const items = useMemo(() => {
     return data?.pages.map((item) => item.items).flat();

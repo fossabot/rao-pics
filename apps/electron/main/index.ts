@@ -1,5 +1,5 @@
 import type cp from "child_process";
-import * as Sentry from "@sentry/electron";
+import * as Sentry from "@sentry/electron/main";
 import { app, Menu, MenuItem } from "electron";
 import { createIPCHandler } from "electron-trpc/main";
 
@@ -22,6 +22,14 @@ import createAllIPCHandler from "./src/ipc";
 import createMenu from "./src/menu";
 import createTray from "./src/tray";
 import { getAndUpdateConfig } from "./src/utils/config";
+
+/**
+ * Sentry init
+ */
+Sentry.init({
+  dsn: "https://178a415c4ef2421a8f52b6c4041319af@o4505321607397376.ingest.sentry.io/4505321612705792",
+  debug: import.meta.env.DEV,
+});
 
 if (app.isPackaged) {
   /**
@@ -134,14 +142,6 @@ app.on("browser-window-focus", () => {
 //     })
 //     .catch((e) => console.error("Failed install extension:", e));
 // }
-
-/**
- * Sentry init
- */
-Sentry.init({
-  dsn: "https://178a415c4ef2421a8f52b6c4041319af@o4505321607397376.ingest.sentry.io/4505321612705792",
-  debug: import.meta.env.DEV,
-});
 
 app.on("ready", () => {
   createTray();

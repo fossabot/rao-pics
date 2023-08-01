@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 
-import { getImgUrl } from "~/utils/common";
+import { getAssetUrl, getImgUrl } from "~/utils/common";
 import { trpc } from "~/utils/trpc";
 import Layout from "~/components/Layout";
 
@@ -12,7 +12,7 @@ const Page: NextPage = () => {
   const router = useRouter();
   const librarryName = router.query.library as string;
   const { data: config } = trpc.config.get.useQuery();
-  const assetsUrl = useMemo(() => (config ? `http://${config?.ip}:${config?.assetsPort}` : null), [config]);
+  const assetsUrl = useMemo(() => getAssetUrl(config), [config]);
 
   const { data } = trpc.tags.get.useQuery({
     library: librarryName,
