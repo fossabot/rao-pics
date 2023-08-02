@@ -32,9 +32,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - run: |
-          pnpm install --no-frozen-lockfile
-          pnpm build
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Release
+        run: |
           cd apps/electron
           pnpm release:mac
           ls ./dist
