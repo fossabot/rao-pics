@@ -25,7 +25,7 @@ export const baseConfig = (outputName: string) => ({
     /**
      * sentry 相关
      */
-    ...["@sentry", "https-proxy-agent", "debug", "agent-base", "lru_map", "cookie"].map((item) => ({
+    ...["@sentry/electron", "@sentry/node", "https-proxy-agent", "debug", "agent-base", "lru_map", "cookie"].map((item) => ({
       from: `../../node_modules/${item}`,
       to: `node_modules/${item}`,
     })),
