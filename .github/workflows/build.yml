@@ -32,22 +32,23 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+      # - name: Install dependencies
+      #   run: pnpm install --no-frozen-lockfile
 
-      - name: Build
-        run: pnpm build
+      # - name: Build
+      #   run: pnpm build
 
       - name: Release
         run: |
           cd apps/electron
-          pnpm release:mac
-          ls ./dist
-        env:
-          USE_HARD_LINKS: false
+          ls ./
+      #     pnpm release:mac
+      #   env:
+      #     USE_HARD_LINKS: false
+
       - name: Upload releases
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./apps/electron/dist/mac/*.dmg
+          file: apps/electron/package.json
           tag: ${{ github.ref }}
