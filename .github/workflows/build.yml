@@ -50,5 +50,5 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: apps/electron/package.json
+          file: types/*
           tag: ${{ github.ref }}
