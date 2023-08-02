@@ -8,7 +8,7 @@ const excludeFileDir = fs.readdirSync("../nextjs/.next/standalone/node_modules")
 export const baseConfig = (outputName: string) => ({
   appId: "com.rao.pics",
   copyright: `Copyright © 2022-${new Date().getFullYear()} meetqy`,
-  asar: process.env.NODE_ENV === "production",
+  asar: process.env.NODE_ENV !== "development",
   directories: {
     output: "dist/" + outputName,
     buildResources: "buildResources",
@@ -22,6 +22,13 @@ export const baseConfig = (outputName: string) => ({
     "!**/node_modules/@acme/**/*",
   ].concat(excludeFileDir),
   extraResources: [
+    /**
+     * sentry 相关
+     */
+    ...["@sentry", "https-proxy-agent", "debug", "agent-base", "lru_map", "cookie"].map((item) => ({
+      from: `../../node_modules/${item}`,
+      to: `node_modules/${item}`,
+    })),
     {
       from: "./buildResources",
       to: "buildResources",

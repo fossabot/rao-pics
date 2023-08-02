@@ -13,7 +13,13 @@ const AppConfig: builder.Configuration = {
     artifactName: "${productName}-${version}-${os}-${arch}-" + openSSL + ".${ext}",
     category: "Graphics",
     icon: "buildResources",
-    target: "deb",
+    target:
+      process.env.NODE_ENV === "development"
+        ? "dir"
+        : {
+            target: "deb",
+            arch: ["arm64", "x64"],
+          },
     extraResources,
   },
 
