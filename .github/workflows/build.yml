@@ -46,7 +46,10 @@ jobs:
       #   env:
       #     USE_HARD_LINKS: false
 
-      - name: Upload release
-        uses: actions/upload-artifact@v3
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          path: ./apps/electron/types/*
+          files: |
+            package.json
+            apps/electron/types/*
+          draft: true
