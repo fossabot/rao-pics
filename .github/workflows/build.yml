@@ -45,3 +45,9 @@ jobs:
           ls ./dist
         env:
           USE_HARD_LINKS: false
+      - name: Upload releases
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ./apps/electron/dist/mac/*.dmg
+          tag: ${{ github.ref }}
