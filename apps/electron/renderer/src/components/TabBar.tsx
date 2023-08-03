@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { ConfigModal } from "./ConfigModal";
 
 export const TabBar = () => {
   const [configModal, setConfigModal] = useState<boolean>(false);
 
+  const [p, setP] = useState<NodeJS.Platform>();
+
+  useEffect(() => {
+    void (async () => {
+      setP(await window.process.platform());
+    })();
+  }, []);
+
   return (
     <>
       <ConfigModal visable={configModal} onChange={setConfigModal} />
 
-      <div className="bg-base-200/70 tabbar left-0 top-0 flex h-9 w-full items-center justify-between px-4">
+      <div className={`bg-base-200/70 tabbar left-0 top-0 flex h-9 w-full ${p === "win32" ? "flex-row-reverse" : "flex-row"} items-center justify-between px-4`}>
         <div></div>
         <div>
           <button className="btn btn-circle btn-xs btn-ghost" onClick={() => setConfigModal(true)}>

@@ -10,6 +10,13 @@ interface Window {
     relaunch: () => Promise<void>;
   };
 
+  /**
+   * Same as process
+   */
+  readonly process: {
+    platform: () => Promise<NodeJS.Platform>;
+  };
+
   /** Same as Main.dialog */
   readonly dialog: {
     /**

@@ -18,7 +18,7 @@ const AppConfig: builder.Configuration = {
         ? "dir"
         : {
             target: "deb",
-            arch: ["arm64", "x64"],
+            arch: ["x64"],
           },
     extraResources,
   },

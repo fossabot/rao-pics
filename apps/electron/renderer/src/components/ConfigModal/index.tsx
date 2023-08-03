@@ -45,7 +45,7 @@ export const ConfigModal = (props: Props) => {
   return (
     <>
       {/* Put this part before </body> tag */}
-      <input type="checkbox" checked={props.visable} id="config-modal" className="modal-toggle" />
+      <input type="checkbox" checked={props.visable} onChange={() => null} id="config-modal" className="modal-toggle" />
       <div className="modal config-modal">
         <div className="modal-box">
           <h3 className="text-lg font-bold">配置信息</h3>

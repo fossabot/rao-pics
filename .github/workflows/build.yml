@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest]
+        os: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -44,22 +44,17 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Release for MacOS、Windows、Linux
-        if: matrix.os == 'macos-latest'
+      - name: Release for linux-openssl-1.1.x
         run: |
           cd apps/electron
           ls ./
-          pnpm release
+          pnpm release:linux-openssl-1.1.x
         env:
           USE_HARD_LINKS: false
 
-      - name: Release
+      - name: Upload release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            apps/electron/dist/mac/*.dmg
-            apps/electron/dist/mac/*.dmg.blockmap
-            apps/electron/dist/win/*.exe
-            apps/electron/dist/win/*.exe.blockmap
             apps/electron/dist/linux-*/*.deb
           draft: true

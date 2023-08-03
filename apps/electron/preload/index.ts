@@ -26,6 +26,10 @@ process.once("loaded", () => {
     relaunch: () => ipcRenderer.invoke("app.relaunch"),
   });
 
+  contextBridge.exposeInMainWorld("process", {
+    platform: () => ipcRenderer.invoke("process.platform"),
+  });
+
   /**
    * window.dialog same as dialog.xxx
    */
