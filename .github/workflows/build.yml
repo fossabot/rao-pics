@@ -4,8 +4,14 @@ on:
     branches:
       - 335-支持修改资源请求地址
 jobs:
-  build_on_mac:
-    runs-on: macOS-latest
+  release:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+
     steps:
       - uses: actions/checkout@v3
       - name: Install Node.js
@@ -13,43 +19,61 @@ jobs:
         with:
           node-version: 18.x
 
-      # - uses: pnpm/action-setup@v2
-      #   name: Install pnpm
-      #   id: pnpm-install
-      #   with:
-      #     version: 7
-      #     run_install: false
-      # - name: Get pnpm store directory
-      #   id: pnpm-cache
-      #   shell: bash
-      #   run: |
-      #     echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      # - uses: actions/cache@v3
-      #   name: Setup pnpm cache
-      #   with:
-      #     path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-      #     key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-pnpm-store-
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7
+          run_install: false
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
 
-      # - name: Install dependencies
-      #   run: pnpm install --no-frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
 
-      # - name: Build
-      #   run: pnpm build
+      - name: Build
+        run: pnpm build
 
-      # - name: Release
-      #   run: |
-      #     cd apps/electron
-      #     ls ./
-      #     pnpm release:mac
-      #   env:
-      #     USE_HARD_LINKS: false
+      - name: Release for MacOS
+        if: matrix.os == 'macos-latest'
+        run: |
+          cd apps/electron
+          ls ./
+          pnpm release:mac
+        env:
+          USE_HARD_LINKS: false
+
+      - name: Release for Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd apps/electron
+          ls ./
+          pnpm release:win
+
+      - name: Release for Linux
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          cd apps/electron
+          ls ./
+          pnpm release:linux
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            package.json
-            apps/electron/types/*
+            apps/electron/dist/mac/*.dmg
+            apps/electron/dist/mac/*.dmg.blockmap
+            apps/electron/dist/win/*.exe
+            apps/electron/dist/win/*.exe.blockmap
+            apps/electron/dist/linux-*/*.deb
           draft: true

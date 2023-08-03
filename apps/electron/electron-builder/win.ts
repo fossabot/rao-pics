@@ -10,7 +10,7 @@ const AppConfig: builder.Configuration = {
   win: {
     icon: "buildResources",
     extraResources,
-    target: process.env.NODE_ENV === "development" ? "dir" : "exe",
+    target: process.env.NODE_ENV === "development" ? "dir" : "nsis",
   },
 
   beforeBuild: async (context) => {
